@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Sanity : MonoBehaviour
 {
@@ -12,6 +13,9 @@ public class Sanity : MonoBehaviour
     [SerializeField] private float sanityCurrent;
     [SerializeField] private int iSanityCurrent;
     [SerializeField] private float sanityPercent;
+    [SerializeField] private float SanitySpeed;
+    [SerializeField] private int masterListCount;
+    private float listPercent;
     private float sanityChange;
 
 
@@ -22,31 +26,12 @@ public class Sanity : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        listPercent = 0.1f;
         sanityCurrent = sanityMax;
-        for (int i = 0; i < SanityMasterList.Count/5; i++)
-        {
-            int ranNum = Random.Range(1, 3);
-            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = ranNum;
-        }
-        for (int i = SanityMasterList.Count/5; i < SanityMasterList.Count/4; i++)
-        {
-            int ranNum = Random.Range(2, 4);
-            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = ranNum;
-        }
-        for (int i = 0; i < SanityMasterList.Count/3; i++)
-        {
-            int ranNum = Random.Range(3, 5);
-            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = ranNum;
-        }
-        for (int i = 0; i < SanityMasterList.Count / 3; i++)
-        {
-            int ranNum = Random.Range(4, 6);
-            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = ranNum;
-        }
-        for (int i = 0 / 4; i < SanityMasterList.Count / 3; i++)
-        {
-            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = 5;
-        }
+        SanitySpeed = 1.0f;
+        masterListCount = SanityMasterList.Count;
+        SetSanity();
+        
     }
 
     // Update is called once per frame
@@ -62,9 +47,10 @@ public class Sanity : MonoBehaviour
             {
                 rayhitInWorld = clohit.point;
                 Debug.DrawLine(Camera.main.ScreenToWorldPoint(Input.mousePosition), rayhitInWorld);
-                sanityCurrent -= Time.deltaTime;
+                sanityCurrent -= Time.deltaTime * SanitySpeed;
                 iSanityCurrent = (int)sanityCurrent;
                 sanityPercent = sanityCurrent / sanityMax;
+
             }
         }
 
@@ -88,24 +74,41 @@ public class Sanity : MonoBehaviour
         }
         else if (sanityPercent < 100 && sanityPercent >= 75)
         {
-            
+            SanitySpeed = 1.5f;
         }
         else if (sanityPercent < 75 && sanityPercent >= 50)
         {
-
+            SanitySpeed = 2.0f;
         }
         else if (sanityPercent < 50 && sanityPercent >= 35)
         {
-
+            SanitySpeed = 2.5f;
         }
-        else if (sanityPercent < 50 && sanityPercent >= 35)
+        else if (sanityPercent < 35 && sanityPercent >= 25)
         {
-
+            SanitySpeed = 3f;
         }
-        else if (sanityPercent < 50 && sanityPercent >= 35)
+        else if (sanityPercent < 25 && sanityPercent >= 10)
         {
-
+            SanitySpeed = 3.5f;
         }
 
+    }
+
+    void SetSanity()
+    {
+        for (int i = 0; i < SanityMasterList.Count * listPercent - 1; i++)
+        {
+            int ranNum = Random.Range(1, 3);
+            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = ranNum;
+        }
+
+        //SanityMasterList.RemoveRange(0, SanityMasterList.Count*listPercent-1);
+        listPercent += 0.1f;
+        for (int i = 0; i < SanityMasterList.Count * listPercent - 1; i++)
+        {
+            int ranNum = Random.Range(3, 5);
+            SanityMasterList[i].GetComponent<SanityObject>().sanityLevel = ranNum;
+        }
     }
 }
