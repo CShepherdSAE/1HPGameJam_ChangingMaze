@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Trigger : MonoBehaviour
 {
+
+    public GameObject triggerEffect;
+    public GameObject wallDisappear;
+    public GameObject wallAppear;
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +22,7 @@ public class Trigger : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider )
+    private void OnTriggerEnter(Collider player)
     {
         
     }
