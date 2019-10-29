@@ -7,7 +7,6 @@ public class Trigger : MonoBehaviour
     public int numOfDisappearWalls;
     public int numOfAppearWalls;
     public bool hasHappened = false;
-    public GameObject triggerEffect;
     public GameObject wallAppear;
     public GameObject wallAppear1;
     public GameObject wallAppear2;
