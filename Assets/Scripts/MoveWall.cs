@@ -26,7 +26,7 @@ public class MoveWall : MonoBehaviour
     //stop being bad
     IEnumerator Waiter()
     {
-        float wait_time = Random.Range (0, 2.5f);
+        float wait_time = Random.Range (0, 1.0f);
         yield return new WaitForSeconds(wait_time);
         Wallchange.Play();
     }

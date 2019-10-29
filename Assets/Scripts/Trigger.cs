@@ -13,7 +13,6 @@ public class Trigger : MonoBehaviour
     public GameObject wallDisappear;
     public GameObject wallDisappear1;
     public GameObject wallDisappear2;
-    public GameObject player;
 
     // Start is called before the first frame update
     void Start()
